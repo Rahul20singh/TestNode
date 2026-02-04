@@ -1,0 +1,8 @@
+services:
+  base_cont:
+    container_name: base_cont
+    build: .
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/app
