@@ -1,0 +1,49 @@
+pipeline{
+    agent{
+        label 'docker-agent-node'
+    }
+    triggers{
+        pollSCM('H/5 * * * *')
+    }
+    tools{
+        nodejs 'node18'
+    }
+    stages{
+        stage("Checkout Repo"){
+           steps{
+             git branch: "main",
+             url: "https://github.com/Rahul20singh/TestNode"
+           }
+        }
+        stage("install dependencies"){
+            steps{
+                sh '''
+                node -v
+                npm -v
+                npm i
+                '''
+            }
+        }
+        stage("run test"){
+            steps{
+                sh 'npm run test'
+            }
+        }
+        stage("build the project"){
+            steps{
+                sh 'npm run build'
+            }
+        }
+    }
+    post{
+        always{
+            echo 'pipeline finished'
+        }
+        success{
+            echo 'build success'
+        }
+        failure{
+            echo 'build failed'
+        }
+    }
+}
