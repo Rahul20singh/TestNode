@@ -3,7 +3,8 @@ pipeline{
         label 'docker-agent-node'
     }
     triggers{
-        pollSCM('H/5 * * * *')
+        // pollSCM('H/5 * * * *')
+        githubPush()
     }
     tools{
         nodejs 'node18'
